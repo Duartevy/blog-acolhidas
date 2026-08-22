@@ -1,0 +1,17 @@
+<section class="latest-section" id="historias">
+  <div class="section-heading container-fluid">
+    <div><p class="eyebrow">Informação para fortalecer</p><h2>Últimas notícias</h2></div>
+    <div class="news-controls">
+      <button type="button" aria-label="Notícia anterior" [disabled]="news.length < 2" (click)="previous()">←</button>
+      <button type="button" [attr.aria-label]="(isPlaying ? 'Pausar' : 'Reproduzir') + ' notícias'" [disabled]="news.length < 2" (click)="toggle()">{{ isPlaying ? 'Pausar' : 'Reproduzir' }}</button>
+      <button type="button" aria-label="Próxima notícia" [disabled]="news.length < 2" (click)="advance()">→</button>
+    </div>
+  </div>
+  @if (current; as currentNews) {
+    <article class="news-feature container-fluid">
+      <div class="news-index">0{{ newsIndex + 1 }} <span>/ {{ news.length }}</span></div>
+      <div class="news-visual"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Jornal aberto com notícias recentes"><span class="news-stamp">NEWS</span><span class="news-visual-caption">Em foco agora</span></div>
+      <div class="news-copy"><p class="story-meta"><span>{{ currentNews.source }}</span><span>{{ currentNews.publishedAt | date:'dd/MM/yyyy' }}</span></p><h3>{{ currentNews.title }}</h3><a class="read-link" [href]="currentNews.link" target="_blank" rel="noopener noreferrer">Ler notícia completa <span aria-hidden="true">↗</span></a></div>
+    </article>
+  } @else { <p class="news-empty container-fluid">{{ message || 'Carregando notícias recentes...' }}</p> }
+</section>

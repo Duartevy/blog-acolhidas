@@ -1,0 +1,9 @@
+:host { display: block; background: #f1eee8; }
+.hero-section { display: grid; grid-template-columns: minmax(300px, .9fr) minmax(400px, 1.1fr); gap: 7vw; max-width: 1440px; min-height: 610px; margin: auto; padding: 6rem 7vw 6.5rem; align-items: center; }
+.eyebrow { margin: 0 0 1.4rem; color: #6e1f2d; font-family: Arial, sans-serif; font-size: .64rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+h1 { max-width: 660px; margin: 0; color: #171516; font-size: clamp(3.2rem, 6vw, 6.5rem); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
+h1 em { color: #6e1f2d; font-style: italic; }
+.hero-intro { max-width: 380px; margin: 2rem 0 2.3rem; color: #655e58; font-family: Arial, sans-serif; font-size: .92rem; line-height: 1.7; }
+.read-link { color: #171516; font-family: Arial, sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .13em; text-decoration: none; text-transform: uppercase; }.read-link span { margin-left: .6rem; color: #6e1f2d; font-size: 1rem; }
+.hero-image { display: block; width: 100%; height: 440px; object-fit: cover; filter: saturate(.72); }
+@media (max-width: 800px) { .hero-section { display: block; padding: 4.5rem 1.4rem 4rem; }.hero-image-wrap { margin-top: 3.5rem; }.hero-image { height: 330px; } }

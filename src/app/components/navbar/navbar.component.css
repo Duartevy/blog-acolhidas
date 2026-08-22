@@ -1,0 +1,11 @@
+:host { display: block; }
+.site-header { background: #171516; }
+.navbar-custom { padding: 1.35rem 3.5rem; background: #171516; }
+.site-nav { max-width: 1440px; margin: auto; }
+.brand-mark { color: #f1eee8; font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; line-height: .8; letter-spacing: .02em; }
+.brand-mark:hover { color: #b99a61; }
+.brand-kicker { display: block; margin-bottom: .55rem; color: #b99a61; font-family: Arial, sans-serif; font-size: .52rem; letter-spacing: .28em; text-transform: uppercase; }
+.nav-link { color: #c8c1b8; font-family: Arial, sans-serif; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; }
+.nav-link:hover, .nav-link.active { color: #f1eee8; }
+.nav-note { margin-left: 2.2rem; padding-left: 2.2rem; border-left: 1px solid #514a46; color: #b99a61; font-family: Arial, sans-serif; font-size: .65rem; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; }
+@media (max-width: 800px) { .navbar-custom { padding: 1.2rem 1.4rem; } .nav-note { display: inline-block; margin: 1rem 0 0; padding: 1rem 0 0; border-top: 1px solid #514a46; border-left: 0; } }

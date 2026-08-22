@@ -1,0 +1,2 @@
+.site-footer { display: flex; justify-content: space-between; padding: 1.4rem 3.5rem; background: #171516; color: #827a73; font-family: Arial, sans-serif; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 800px) { .site-footer { flex-direction: column; gap: .7rem; padding: 1.4rem; } }

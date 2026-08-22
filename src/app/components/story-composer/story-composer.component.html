@@ -1,0 +1,10 @@
+<section class="share-section" id="compartilhe">
+  <div class="share-intro"><p class="eyebrow">Este espaço é seu</p><h2>O que você<br><em>precisa dizer?</em></h2><p>Sua publicação será compartilhada sem nome. Escreva no seu tempo, do seu jeito.</p></div>
+  <form #shareForm class="share-box" (submit)="publish($event, story.value, topic.value, shareForm)">
+    <div class="share-box-top"><span class="anonymous-badge"><span aria-hidden="true">✦</span> Publicação anônima</span><span class="character-count">{{ characterCount }} / 800</span></div>
+    <label class="visually-hidden" for="story">Conte o que está em seu coração</label>
+    <textarea #story id="story" rows="5" maxlength="800" (input)="characterCount = story.value.length" placeholder="Pode começar por: Eu nunca contei isso para ninguém..."></textarea>
+    <div class="share-box-bottom"><select #topic aria-label="Escolha um tema"><option selected>Escolha um tema</option><option>Medos e ansiedade</option><option>Relacionamentos</option><option>Corpo e autoestima</option><option>Desejos e sonhos</option></select><button type="submit" [disabled]="isPublishing">{{ isPublishing ? 'Publicando...' : 'Publicar com cuidado' }} <span aria-hidden="true">↗</span></button></div>
+    <p class="safety-note"><span aria-hidden="true">✓</span> Sem nomes, sem julgamentos. Apenas escuta e respeito.</p><p class="publish-message" aria-live="polite">{{ message }}</p>
+  </form>
+</section>

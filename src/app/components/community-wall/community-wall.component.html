@@ -1,0 +1,14 @@
+<section class="community-section" aria-labelledby="community-title">
+  <div class="section-heading"><div><p class="eyebrow">Mural anônimo</p><h2 id="community-title">Vozes acolhidas</h2></div><div class="pagination-controls"><span>{{ posts.length ? currentPage + 1 : 0 }} / {{ totalPages }}</span><button type="button" [disabled]="!currentPage" (click)="previous()" aria-label="Página anterior">←</button><button type="button" [disabled]="!hasNext" (click)="next()" aria-label="Próxima página">→</button></div></div>
+  <div class="community-list">
+    @for (post of visiblePosts; track post.id) {
+      <article class="community-post"><div class="post-number"><i class="fa-solid fa-user" aria-hidden="true"></i></div><div><p class="post-topic">{{ post.topic }}</p><p class="post-content">{{ post.content }}</p><div class="post-actions"><button type="button" class="reaction-button" (click)="react('post', post.id)">❤️ {{ post.reactionCount }}</button><span class="post-footer">Anônima <span>·</span> {{ post.commentsCount }} comentários</span></div><div class="comments-area">
+        @for (comment of visibleComments(post.id); track comment.id) {
+          <div class="comment-item" [style.margin-left.rem]="(comment.depth || 0) * 1.5"><div class="comment-line"><i class="fa-solid fa-user" aria-hidden="true"></i><span>{{ comment.content }}</span></div><div class="comment-actions"><button type="button" (click)="react('comment', comment.id)">❤️ {{ comment.reactionCount }}</button><button type="button" (click)="replyTo = comment.id">Responder</button></div>@if (replyTo === comment.id) {<form class="reply-form" #replyForm (submit)="submitComment($event, post.id, reply.value, replyForm, comment.id)"><input #reply maxlength="500" placeholder="Responder anonimamente..." aria-label="Responder comentário"><button type="submit">Enviar</button></form>}</div>
+        }
+        @if (hasMore(post.id)) {<button type="button" class="more-comments" (click)="toggle(post.id)">{{ expanded.has(post.id) ? 'Ver menos comentários' : 'Ver mais comentários' }}</button>}
+        <form class="comment-form" #commentForm (submit)="submitComment($event, post.id, commentInput.value, commentForm)"><input #commentInput maxlength="500" placeholder="Deixe uma palavra de apoio..." aria-label="Comentar"><button type="submit">Comentar</button></form><p class="comment-message" aria-live="polite">{{ message }}</p>
+      </div></div></article>
+    } @empty {<p class="empty-community">O mural ainda está em branco. Sua voz pode ser a primeira.</p>}
+  </div>
+</section>
