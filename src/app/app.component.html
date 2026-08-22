@@ -123,29 +123,30 @@
 
   <section class="latest-section" id="historias">
     <div class="section-heading container-fluid">
-      <div><p class="eyebrow">De mulher para mulher</p><h2>Últimas histórias</h2></div>
-      <a class="read-link" href="#historias">Ver todas <span aria-hidden="true">↗</span></a>
+      <div><p class="eyebrow">Informação para fortalecer</p><h2>Últimas notícias</h2></div>
+      <div class="news-controls">
+        <button type="button" aria-label="Notícia anterior" [disabled]="news.length < 2" (click)="previousNews()">←</button>
+        <button type="button" [attr.aria-label]="(isNewsPlaying ? 'Pausar' : 'Reproduzir') + ' notícias'" [disabled]="news.length < 2" (click)="toggleNews()">{{ isNewsPlaying ? 'Pausar' : 'Reproduzir' }}</button>
+        <button type="button" aria-label="Próxima notícia" [disabled]="news.length < 2" (click)="advanceNews()">→</button>
+      </div>
     </div>
-    <div class="story-grid container-fluid">
-      <article class="story-card story-card-featured">
-        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Palco iluminado durante um evento">
-        <div class="story-meta"><span>01</span><span>Vida social</span></div>
-        <h3>Eu achei que era a única a sentir isso</h3>
-        <p>Anônima <span>·</span> 6 min de leitura</p>
+    @if (news[newsIndex]; as currentNews) {
+      <article class="news-feature container-fluid">
+        <div class="news-index">0{{ newsIndex + 1 }} <span>/ {{ news.length }}</span></div>
+        <div class="news-visual">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Jornal aberto com notícias recentes">
+          <span class="news-stamp">NEWS</span>
+          <span class="news-visual-caption">Em foco agora</span>
+        </div>
+        <div class="news-copy">
+          <p class="story-meta"><span>{{ currentNews.source }}</span><span>{{ currentNews.publishedAt | date:'dd/MM/yyyy' }}</span></p>
+          <h3>{{ currentNews.title }}</h3>
+          <a class="read-link" [href]="currentNews.link" target="_blank" rel="noopener noreferrer">Ler notícia completa <span aria-hidden="true">↗</span></a>
+        </div>
       </article>
-      <article class="story-card">
-        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Pessoa usando um visual elegante">
-        <div class="story-meta"><span>02</span><span>Estilo</span></div>
-        <h3>Sobre recomeçar sem pedir desculpas</h3>
-        <p>Anônima <span>·</span> 4 min de leitura</p>
-      </article>
-      <article class="story-card" id="cultura">
-        <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Público em um show com luzes vermelhas">
-        <div class="story-meta"><span>03</span><span>Cultura</span></div>
-        <h3>O desejo de escolher um caminho só meu</h3>
-        <p>Anônima <span>·</span> 5 min de leitura</p>
-      </article>
-    </div>
+    } @else {
+      <p class="news-empty container-fluid">{{ newsMessage || 'Carregando notícias recentes...' }}</p>
+    }
   </section>
 
   <section class="newsletter-section" id="newsletter">

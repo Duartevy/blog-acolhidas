@@ -2,15 +2,38 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import pg from 'pg';
+import Parser from 'rss-parser';
 
 const { Pool } = pg;
 const app = express();
 const port = Number(process.env.PORT || 3000);
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const rssParser = new Parser();
+const newsFeedUrl = process.env.NEWS_FEED_URL || 'https://g1.globo.com/rss/g1/';
+let newsCache = { expiresAt: 0, items: [] };
 
 app.set('trust proxy', process.env.TRUST_PROXY === 'true');
 app.use(cors({ origin: process.env.FRONTEND_ORIGIN || 'http://localhost:4200' }));
 app.use(express.json({ limit: '20kb' }));
+
+app.get('/api/news', async (_request, response) => {
+  if (newsCache.expiresAt > Date.now()) return response.json(newsCache.items);
+
+  try {
+    const feed = await rssParser.parseURL(newsFeedUrl);
+    const items = feed.items.slice(0, 12).map((item, index) => ({
+      id: item.guid || item.link || String(index),
+      title: item.title || 'Notícia sem título',
+      link: item.link || '',
+      publishedAt: item.isoDate || item.pubDate || null,
+      source: feed.title || 'Notícias G1'
+    }));
+    newsCache = { expiresAt: Date.now() + 10 * 60 * 1000, items };
+    return response.json(items);
+  } catch {
+    return response.status(502).json({ error: 'Não foi possível carregar as notícias agora.' });
+  }
+});
 
 const topics = new Set([
   'Medos e ansiedade',

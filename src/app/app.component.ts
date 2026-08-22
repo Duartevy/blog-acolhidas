@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 interface Post {
@@ -21,13 +22,21 @@ interface Comment {
   depth: number;
 }
 
+interface NewsItem {
+  id: string;
+  title: string;
+  link: string;
+  publishedAt: string | null;
+  source: string;
+}
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [DatePipe, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnDestroy, OnInit {
   title = 'blog-acolhidas';
   characterCount = 0;
   posts: Post[] = [];
@@ -40,9 +49,20 @@ export class AppComponent implements OnInit {
   replyTo: number | null = null;
   readonly commentsPreviewLimit = 4;
   expandedComments = new Set<number>();
+  news: NewsItem[] = [];
+  newsIndex = 0;
+  isNewsPlaying = true;
+  newsMessage = '';
+  private newsTimer?: ReturnType<typeof setInterval>;
 
   ngOnInit(): void {
     void this.loadPosts();
+    void this.loadNews();
+    this.newsTimer = setInterval(() => this.nextNews(), 5000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.newsTimer) clearInterval(this.newsTimer);
   }
 
   get visiblePosts(): Post[] {
@@ -72,6 +92,30 @@ export class AppComponent implements OnInit {
     if (this.hasNextPage) {
       this.currentPage += 1;
     }
+  }
+
+  nextNews(): void {
+    if (this.news.length > 1 && this.isNewsPlaying) {
+      this.newsIndex = (this.newsIndex + 1) % this.news.length;
+    }
+  }
+
+  previousNews(): void {
+    this.isNewsPlaying = false;
+    if (this.news.length > 1) {
+      this.newsIndex = (this.newsIndex - 1 + this.news.length) % this.news.length;
+    }
+  }
+
+  advanceNews(): void {
+    this.isNewsPlaying = false;
+    if (this.news.length > 1) {
+      this.newsIndex = (this.newsIndex + 1) % this.news.length;
+    }
+  }
+
+  toggleNews(): void {
+    this.isNewsPlaying = !this.isNewsPlaying;
   }
 
   async publishStory(event: SubmitEvent, content: string, topic: string, form: HTMLFormElement): Promise<void> {
@@ -121,6 +165,16 @@ export class AppComponent implements OnInit {
       }
     } catch {
       this.publishMessage = 'O servidor está offline. Inicie a API para publicar relatos.';
+    }
+  }
+
+  private async loadNews(): Promise<void> {
+    try {
+      const response = await fetch('http://localhost:3000/api/news');
+      if (!response.ok) throw new Error();
+      this.news = await response.json() as NewsItem[];
+    } catch {
+      this.newsMessage = 'Notícias indisponíveis no momento.';
     }
   }
 
