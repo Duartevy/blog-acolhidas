@@ -63,7 +63,7 @@ h1 em, h2 em { color: var(--wine); font-style: italic; }
 .pagination-controls button { width: 2.4rem; height: 2.4rem; border: 1px solid #635955; background: transparent; color: var(--paper); font-size: 1.1rem; }
 .pagination-controls button:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
 .pagination-controls button:disabled { cursor: not-allowed; opacity: .3; }
-.community-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 4rem; max-width: 1440px; margin: 3rem auto 0; }
+.community-list { display: grid; grid-template-columns: minmax(0, 820px); justify-content: center; max-width: 1440px; margin: 3rem auto 0; }
 .community-post { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1rem; padding: 1.5rem 0; border-top: 1px solid #403a38; }
 .post-number { color: var(--gold); font-size: 1.25rem; }
 .post-topic { margin: 0 0 .7rem; color: #ba9aa0; font-family: Arial, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
@@ -84,6 +84,8 @@ h1 em, h2 em { color: var(--wine); font-style: italic; }
 .comment-form input::placeholder, .reply-form input::placeholder { color: #817670; }
 .comment-form button, .reply-form button { border: 0; background: transparent; color: var(--gold); font-family: Arial, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .comment-message { min-height: 1rem; margin: .6rem 0 0; color: #9d9186; font-family: Arial, sans-serif; font-size: .62rem; }
+.more-comments { margin: .5rem 0 1rem 2.1rem; padding: 0; border: 0; background: transparent; color: #b9a6a0; font-family: Arial, sans-serif; font-size: .68rem; }
+.more-comments:hover { color: var(--gold); }
 
 .latest-section { padding: 5rem 7vw 7rem; background: #e7e1d9; }
 .section-heading { display: flex; max-width: 1440px; margin: auto; justify-content: space-between; align-items: end; }
@@ -122,7 +124,7 @@ h2 { margin: 0; font-size: clamp(2.3rem, 4vw, 4rem); font-weight: 400; letter-sp
   .share-box button { width: 100%; }
   .community-section { padding: 4rem 1.4rem; }
   .community-section .section-heading { align-items: start; flex-direction: column; gap: 1.5rem; }
-  .community-list { grid-template-columns: 1fr; margin-top: 2rem; }
+  .community-list { grid-template-columns: minmax(0, 1fr); margin-top: 2rem; }
   .post-content { font-size: 1.2rem; }
   .latest-section { padding: 4rem 1.4rem; }
   .story-grid { grid-template-columns: 1fr; gap: 3.5rem; }

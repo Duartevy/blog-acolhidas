@@ -146,8 +146,7 @@ app.post('/api/reactions', async (request, response) => {
   const targetType = cleanText(request.body?.targetType);
   const targetId = validId(request.body?.targetId);
   const reactionType = cleanText(request.body?.reactionType);
-  const actorId = cleanText(request.body?.actorId);
-  if (!['post', 'comment'].includes(targetType) || !targetId || !reactionTypes.has(reactionType) || !actorId) {
+  if (!['post', 'comment'].includes(targetType) || !targetId || !reactionTypes.has(reactionType)) {
     return response.status(400).json({ error: 'Dados de reação inválidos.' });
   }
 
@@ -158,9 +157,9 @@ app.post('/api/reactions', async (request, response) => {
     await pool.query(`
       INSERT INTO reactions (target_type, target_id, reaction_type, actor_id, ip_address)
       VALUES ($1, $2, $3, $4, $5)
-      ON CONFLICT (target_type, target_id, actor_id)
+      ON CONFLICT (target_type, target_id, ip_address)
       DO UPDATE SET reaction_type = EXCLUDED.reaction_type
-    `, [targetType, targetId, reactionType, actorId, request.ip]);
+    `, [targetType, targetId, reactionType, request.ip, request.ip]);
     const { rows } = await pool.query('SELECT COUNT(*)::int AS count FROM reactions WHERE target_type = $1 AND target_id = $2', [targetType, targetId]);
     return response.json({ reactionCount: rows[0].count, reactionType });
   } catch {

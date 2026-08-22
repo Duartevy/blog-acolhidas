@@ -83,7 +83,7 @@
               <span class="post-footer">Anônima <span>·</span> {{ post.commentsCount }} comentários</span>
             </div>
             <div class="comments-area">
-              @for (comment of commentsForPost(post.id); track comment.id) {
+              @for (comment of visibleCommentsForPost(post.id); track comment.id) {
                 <div class="comment-item" [style.margin-left.rem]="comment.depth * 1.5">
                   <div class="comment-line">
                     <i class="fa-solid fa-user" aria-hidden="true"></i>
@@ -100,6 +100,11 @@
                     </form>
                   }
                 </div>
+              }
+              @if (hasMoreComments(post.id)) {
+                <button type="button" class="more-comments" (click)="toggleComments(post.id)">
+                  {{ expandedComments.has(post.id) ? 'Ver menos comentários' : 'Ver mais comentários' }}
+                </button>
               }
               <form class="comment-form" (submit)="publishComment($event, post.id, comment.value, commentForm)" #commentForm>
                 <label class="visually-hidden" for="comment-{{ post.id }}">Seu comentário</label>

@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS reactions (
   actor_id VARCHAR(128) NOT NULL,
   ip_address INET,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE (target_type, target_id, actor_id)
+  UNIQUE (target_type, target_id, ip_address)
 );
 
 CREATE INDEX IF NOT EXISTS comments_post_id_idx ON comments(post_id);
@@ -33,5 +33,8 @@ CREATE INDEX IF NOT EXISTS reactions_target_idx ON reactions(target_type, target
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS ip_address INET;
 ALTER TABLE comments ADD COLUMN IF NOT EXISTS ip_address INET;
 ALTER TABLE reactions ADD COLUMN IF NOT EXISTS ip_address INET;
+ALTER TABLE reactions DROP CONSTRAINT IF EXISTS reactions_target_type_target_id_actor_id_key;
+ALTER TABLE reactions DROP CONSTRAINT IF EXISTS reactions_target_ip_unique;
+ALTER TABLE reactions ADD CONSTRAINT reactions_target_ip_unique UNIQUE (target_type, target_id, ip_address);
 CREATE INDEX IF NOT EXISTS posts_ip_address_idx ON posts(ip_address);
 CREATE INDEX IF NOT EXISTS comments_ip_address_idx ON comments(ip_address);

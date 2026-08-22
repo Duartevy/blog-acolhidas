@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
   commentsByPost: Record<number, Comment[]> = {};
   commentMessage = '';
   replyTo: number | null = null;
-  readonly actorId = this.getActorId();
+  readonly commentsPreviewLimit = 4;
+  expandedComments = new Set<number>();
 
   ngOnInit(): void {
     void this.loadPosts();
@@ -135,6 +136,34 @@ export class AppComponent implements OnInit {
     return comments;
   }
 
+  visibleCommentsForPost(postId: number): Comment[] {
+    const rootComments = this.commentsByPost[postId] || [];
+    const selectedRoots = this.expandedComments.has(postId)
+      ? rootComments
+      : rootComments.slice(0, this.commentsPreviewLimit);
+    const visibleComments: Comment[] = [];
+    const appendTree = (comments: Comment[], depth: number): void => {
+      for (const comment of comments) {
+        visibleComments.push({ ...comment, depth });
+        appendTree(comment.replies, depth + 1);
+      }
+    };
+    appendTree(selectedRoots, 0);
+    return visibleComments;
+  }
+
+  hasMoreComments(postId: number): boolean {
+    return (this.commentsByPost[postId] || []).length > this.commentsPreviewLimit;
+  }
+
+  toggleComments(postId: number): void {
+    if (this.expandedComments.has(postId)) {
+      this.expandedComments.delete(postId);
+    } else {
+      this.expandedComments.add(postId);
+    }
+  }
+
   async publishComment(event: SubmitEvent, postId: number, content: string, form: HTMLFormElement, parentId: number | null = null): Promise<void> {
     event.preventDefault();
     const cleanContent = content.trim();
@@ -155,7 +184,6 @@ export class AppComponent implements OnInit {
       if (post) post.commentsCount += 1;
       form.reset();
       this.replyTo = null;
-      this.commentMessage = 'Comentário publicado anonimamente.';
     } catch (error) {
       this.commentMessage = error instanceof Error ? error.message : 'Não foi possível salvar o comentário.';
     }
@@ -165,7 +193,7 @@ export class AppComponent implements OnInit {
     const response = await fetch('http://localhost:3000/api/reactions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ targetType, targetId, reactionType, actorId: this.actorId })
+      body: JSON.stringify({ targetType, targetId, reactionType })
     });
     if (!response.ok) return;
     const result = await response.json() as { reactionCount: number };
@@ -194,12 +222,4 @@ export class AppComponent implements OnInit {
     return undefined;
   }
 
-  private getActorId(): string {
-    const key = 'acolhidas-actor-id';
-    const existing = localStorage.getItem(key);
-    if (existing) return existing;
-    const created = crypto.randomUUID();
-    localStorage.setItem(key, created);
-    return created;
-  }
 }
