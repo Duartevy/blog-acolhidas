@@ -1,4 +1,7 @@
 import 'dotenv/config';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import express from 'express';
 import pg from 'pg';
@@ -190,6 +193,17 @@ app.post('/api/reactions', async (request, response) => {
   }
 });
 
+// Em produção, a própria API entrega o site Angular já compilado (npm run build).
+// Localmente, essa pasta pode não existir e o Angular roda separado via npm start.
+const siteDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist/blog-acolhidas/browser');
+if (existsSync(path.join(siteDir, 'index.html'))) {
+  app.use(express.static(siteDir));
+  app.use((request, response, next) => {
+    if (request.method !== 'GET' || request.path.startsWith('/api')) return next();
+    return response.sendFile(path.join(siteDir, 'index.html'));
+  });
+}
+
 app.listen(port, () => {
-  console.log(`API do Blog Acolhidas disponível em http://localhost:${port}`);
+  console.log(`API do Blog Acolhidas disponível na porta ${port}`);
 });

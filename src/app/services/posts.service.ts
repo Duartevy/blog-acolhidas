@@ -3,7 +3,7 @@ import { Post } from '../models/blog.models';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
-  private readonly apiUrl = 'http://localhost:3000/api/posts';
+  private readonly apiUrl = '/api/posts';
 
   async list(): Promise<Post[]> {
     const response = await fetch(this.apiUrl);

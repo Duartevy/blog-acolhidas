@@ -3,7 +3,7 @@ import { Comment } from '../models/blog.models';
 
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
-  private readonly apiUrl = 'http://localhost:3000/api';
+  private readonly apiUrl = '/api';
 
   async list(postId: number): Promise<Comment[]> {
     const response = await fetch(`${this.apiUrl}/posts/${postId}/comments`);
