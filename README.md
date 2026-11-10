@@ -81,8 +81,17 @@ npm test       # executa os testes
 
 ## Fotos do Projeto
 
+### Página inicial
 ![Página inicial](docs/header.png)
+
+### Mural de publicações
 ![Mural de publicações](docs/publicação.png)
+
+### Histórias
 ![Histórias](docs/historias.png)
+
+### Notícias do G1 em tempo real
 ![Notícias G1 em tempo real](docs/news.png)
+
+### Sobre
 ![Sobre](docs/footer.png)
