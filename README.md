@@ -78,3 +78,11 @@ npm test       # executa os testes
 - **Erro de conexão com o banco:** confirme que o PostgreSQL está rodando, que o banco `acolhidas` existe e que a `DATABASE_URL` está correta.
 - **Relatos não carregam:** confirme que a API está ativa e que o `npm run db:init` terminou sem erro.
 - **Notícias indisponíveis:** verifique a conexão com a internet.
+
+## Fotos do Projeto
+
+![Página inicial](docs/header.png)
+![Mural de publicações](docs/publicação.png)
+![Histórias](docs/historias.png)
+![Notícias G1 em tempo real](docs/news.png)
+![Sobre](docs/footer.png)
