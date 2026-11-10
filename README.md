@@ -1,67 +1,80 @@
-<<<<<<< HEAD
-# blog-acolhidas
-Blog destinado a comunidade feminina postarem suas vivências e dúvidas. 
-=======
-# BlogAcolhidas
+# Blog Acolhidas
 
+Blog para mulheres compartilharem histórias e vivências com acolhimento, anonimato e sem julgamentos. Reúne um mural de relatos e comentários e uma área de notícias.
 
-Blog destinado a uma comunidade feminina para compartilhar vivências e dúvidas com acolhimento e anonimato.
+**Stack:** Angular 19, API Node.js e PostgreSQL.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.27.
+## Requisitos
 
-## Development server
+- Node.js (versão LTS) e npm
+- PostgreSQL instalado e em execução
+- Internet (as notícias vêm de um feed RSS externo)
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalação
 
 ```bash
-ng generate component component-name
+git clone URL_DO_REPOSITORIO
+cd blog-acolhidas
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Banco de dados
+
+1. Crie o banco (pelo terminal do PostgreSQL ou por achar melhor):
+
+```sql
+CREATE DATABASE acolhidas;
+```
+
+2. Crie o arquivo `.env` a partir do exemplo:
+```.env.example .env```
+
+3. Ajuste a `DATABASE_URL` com seu usuário e senha:
+```env
+DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/acolhidas
+PORT=3000
+FRONTEND_ORIGIN=http://localhost:4200
+TRUST_PROXY=false
+```
+
+4. Crie as tabelas:
 
 ```bash
-ng generate --help
+npm run db:init
 ```
 
-## Building
+## Executar localmente
 
-To build the project run:
+Abra dois terminais na pasta do projeto.
+
+**Terminal 1 (API):**
 
 ```bash
-ng build
+npm run api
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+**Terminal 2 (Angular):**
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+| Serviço | URL |
+| --- | --- |
+| Site | http://localhost:4200 |
+| API | http://localhost:3000 |
+| Teste do banco | http://localhost:3000/api/health |
+| Notícias (RSS) | http://localhost:3000/api/news |
 
-For end-to-end (e2e) testing, run:
+## Comandos úteis
 
 ```bash
-ng e2e
+npm run build  # compila a aplicação
+npm test       # executa os testes
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Problemas comuns
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
->>>>>>> 3ab239f (initial commit)
+- **Erro de conexão com o banco:** confirme que o PostgreSQL está rodando, que o banco `acolhidas` existe e que a `DATABASE_URL` está correta.
+- **Relatos não carregam:** confirme que a API está ativa e que o `npm run db:init` terminou sem erro.
+- **Notícias indisponíveis:** verifique a conexão com a internet.
