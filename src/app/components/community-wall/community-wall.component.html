@@ -1,4 +1,4 @@
-<section class="community-section" aria-labelledby="community-title">
+<section class="community-section" id="historias" aria-labelledby="community-title">
   <div class="section-heading"><div><p class="eyebrow">Mural anônimo</p><h2 id="community-title">Vozes acolhidas</h2></div><div class="pagination-controls"><span>{{ posts.length ? currentPage + 1 : 0 }} / {{ totalPages }}</span><button type="button" [disabled]="!currentPage" (click)="previous()" aria-label="Página anterior">←</button><button type="button" [disabled]="!hasNext" (click)="next()" aria-label="Próxima página">→</button></div></div>
   <div class="community-list">
     @for (post of visiblePosts; track post.id) {
