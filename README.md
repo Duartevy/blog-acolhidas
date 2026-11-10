@@ -94,4 +94,4 @@ npm test       # executa os testes
 ![Notícias G1](docs/news.png)
 
 ### Sobre
-![Sobre](docs/footer.png)
+![Sobre](docs/footer2.png)
