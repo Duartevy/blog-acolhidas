@@ -88,7 +88,7 @@ npm test       # executa os testes
 ![Mural de publicações](docs/publicação.png)
 
 ### Histórias
-![Histórias](docs/historias.png)
+![Histórias](docs/historias2.png)
 
 ### Notícias do G1 atualizadas
 ![Notícias G1](docs/news.png)
