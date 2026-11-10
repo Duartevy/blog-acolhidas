@@ -90,8 +90,8 @@ npm test       # executa os testes
 ### Histórias
 ![Histórias](docs/historias.png)
 
-### Notícias do G1 em tempo real
-![Notícias G1 em tempo real](docs/news.png)
+### Notícias do G1 atualizadas
+![Notícias G1](docs/news.png)
 
 ### Sobre
 ![Sobre](docs/footer.png)
